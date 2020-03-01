@@ -70,20 +70,6 @@ export const constantRouterMap = [
       }
     ]
   },
-  {
-    path: '/user',
-    component: Layout,
-    hidden: true,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: 'center',
-        component: () => import('@/views/system/user/center'),
-        name: '个人中心',
-        meta: { title: '个人中心', icon: 'user' }
-      }
-    ]
-  }
   // { path: '*', redirect: '/404', hidden: true }
 ]
 
