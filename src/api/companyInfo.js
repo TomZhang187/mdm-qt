@@ -55,15 +55,6 @@ export function findAllCompany() {
   })
 }
 
-export function findCompanyBasicByTaxId(params) {
-  return request({
-    url: 'api/findCompanyBasicByTaxId',
-    method: 'get',
-    params
-
-  })
-}
-
 export function VerifyPermission(params) {
   return request({
     url: 'api/verifyPermission',

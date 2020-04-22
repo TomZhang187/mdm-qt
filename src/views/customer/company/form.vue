@@ -406,7 +406,7 @@ import initAccount from '@/mixins/initAccount'
 import initContact from '@/mixins/initContact'
 
 import {
-  verifyAdd, findCompanyBasicByTaxId, getPermission
+  verifyAdd, getPermission
 } from '@/api/companyInfo'
 import { saveByCompanyKey, findPermissionRecord } from '@/api/companyUpdate'
 export default {
@@ -435,7 +435,6 @@ export default {
       } else {
         this.permissionText = '申请管理权限'
         verifyAdd(this.form).then(res => {
-          const bc = res.belongCompany
           if (bc === value) {
             if (res.isDisable === 0) {
               callback(new Error('公司已有该客商' + '  ' + '状态' + '停用'))
