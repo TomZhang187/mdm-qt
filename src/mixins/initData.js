@@ -22,7 +22,7 @@ export default {
       dictCustomerType: [],
       dictTrades: [],
       parentCompany: [],
-      // 上级公司模糊查询字典
+      // 当前用户拥有权限客商的字典
       companyDicts: [],
       // 字典转换相关数据
       materialTypeArr: {

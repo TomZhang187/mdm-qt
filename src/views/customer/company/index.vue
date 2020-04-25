@@ -88,14 +88,14 @@
       <el-table-column v-if="false" label="客商主键" prop="companyKey"/>
       <el-table-column :show-overflow-tooltip="true" label="客商名称" prop="companyName"/>
       <el-table-column :show-overflow-tooltip="true" label="客商简称" prop="companyShortName"/>
-      <el-table-column label="客商编号" prop="taxId"/>
+      <el-table-column :show-overflow-tooltip="true" label="客商编号" prop="taxId"/>
       <el-table-column :formatter="formatArea" label="所属地区" prop="belongArea"/>
       <el-table-column label="客商属性" >
         <template slot-scope="scope">
           <span>{{ scope.row.customerProp | filtercustomerProp }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="所属公司" >
+      <el-table-column v-if="false" label="所属公司" >
         <template slot-scope="scope">
           <span>{{ scope.row.belongCompany | filterbelongCompany }}</span>
         </template>
@@ -585,18 +585,18 @@ export default {
       _this.tableAccountSize = data.accounts.length
       this.$refs.form.doDetails()
     },
-    Test() {
+    Test() {     
       const user = this.$store.state.user.dingUser
       alert('用户id' + user.userid + '部门id' + user.department[0])
-      // dingTest({
-      //   userId: user.userid,
-      //   depteId: user.department[1]
-      // }).then(
-      //   res => {
-      //     alert('钉钉接口调用成功')
-      //   }
-      // )
-      // alert("当前用户"+user.name)
+      dingTest({
+        userId: user.userid,
+        depteId: user.department[1]
+      }).then(
+        res => {
+          alert('钉钉接口调用成功')
+        }
+      )
+      alert("当前用户"+user.name)
     },
 
     async handleChange(value) {

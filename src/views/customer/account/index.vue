@@ -28,7 +28,7 @@
     <eForm ref="form" :is-add="isAdd"/>
     <!--表格渲染-->
     <el-table v-loading="loading" :data="data" size="small" style="width: 100%;">
-      <el-table-column :show-overflow-tooltip="true" prop="belongCompany" label="所属公司"/>
+      <el-table-column :show-overflow-tooltip="true" prop="belongCompany" label="所属客商"/>
       <el-table-column prop="accountName" label="账户名"/>
       <el-table-column prop="account" label="账号"/>
       <el-table-column prop="accountBlank" label="开户行"/>

@@ -21,7 +21,7 @@ export default {
   /**
    * @description token key
    */
-  TokenKey: 'HQHP-MDM-TOEKN',
+  TokenKey: 'LF-MDM-TOEKN',
 
   /**
    * @description 请求超时时间，毫秒（默认2分钟）
@@ -56,17 +56,17 @@ export default {
   /**
    * 底部文字，支持html语法
    */
-  footerTxt: '© 2019 HQHP <a href="#" target="_blank">xxx</a>',
+  footerTxt: '© 2020 LF <a href="#" target="_blank">xxx</a>',
 
   /**
    * 备案号
    */
-  caseNumber: '备案号XXX',
+  caseNumber: '备案号110',
   /**
    * 钉钉配置--企业ID
    */
   // corpId: 'dinge9c470f66b28c79535c2f4657eb6378f' // 测试环境
   
-  corpId:'ding1d7e8b088fab194f35c2f4657eb6378f' //正式环境
+  corpId:'ding872e051ff9bb057224f2f5cc6abecb85' //正式环境
 
 }

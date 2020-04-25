@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import logoImg from '@/assets/logo/logo1.png'
+import logoImg from '@/assets/logo/LF.png'
 import { mapState } from 'vuex'
 export default {
   name: 'Logo',

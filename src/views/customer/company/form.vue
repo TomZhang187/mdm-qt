@@ -115,7 +115,7 @@
           <span v-show="detailsShow?false:true" style="width:262px;float:left">{{ formAdd.companyShortName }}</span>
         </el-form-item>
 
-        <el-form-item label="上级公司" prop="parentCompanyId">
+        <!-- <el-form-item v-if="false"   label="上级公司" prop="parentCompanyId">
           <el-select
             v-show="detailsShow?true:false"
             v-model="formAdd.parentCompanyId"
@@ -135,9 +135,9 @@
             />
           </el-select>
           <span v-show="detailsShow?false:true" style="width:262px;float:left">{{ formAdd.parentCompanyId | filterParentCompany }}</span>
-        </el-form-item>
+        </el-form-item> -->
 
-        <el-form-item label="所属公司" prop="belongCompany">
+        <el-form-item v-if="false" label="所属公司" prop="belongCompany">
           <el-select
             v-show="detailsShow?true:false"
             v-model="formAdd.belongCompany"
@@ -423,11 +423,39 @@ export default {
       if (!value) {
         callback(new Error('纳税编号不能为空'))
       } else if (reg.test(value)) {
-        callback()
+        
+        verifyAdd(this.form).then(res => {
+           console.log(res)    
+           if(res.companyKey === null){
+               callback()
+           }else{
+              this.showPermissButton = true
+          this.permissionText = '申请管理权限'
+            if (res.isDisable === 0) {
+              callback(new Error('公司已有该客商' + '  ' + '状态' + '停用'))
+              this.verifyPermission(res)
+            } else {
+              callback(
+                new Error(
+                  '公司已有该客商' +
+                    '  ' +
+                    '状态:' +
+                   this.statusArr.labelByValue[res.companyState]
+                )
+              )
+              this.verifyPermission(res)
+            }
+            }
+          
+        })
+
+      
       } else {
         callback(new Error('纳税编号不合法'))
+        this.showPermissButton = false
       }
     }
+    
     var checkBelongCompany = (rule, value, callback) => {
       this.showPermissButton = false
       if (!value) {
@@ -435,6 +463,7 @@ export default {
       } else {
         this.permissionText = '申请管理权限'
         verifyAdd(this.form).then(res => {
+         
           if (bc === value) {
             if (res.isDisable === 0) {
               callback(new Error('公司已有该客商' + '  ' + '状态' + '停用'))
@@ -567,10 +596,10 @@ export default {
       },
       rulesAdd: {
         // 新增客商表单验证
-        taxId: [{
-          validator: checktaxId,
-          trigger: ['blur', 'change']
-        }],
+        // taxId: [{
+        //   validator: checktaxId,
+        //   trigger: ['blur', 'change']
+        // }],
         // belongCompany: [{
         //   validator: checkNotNull,
         //   trigger: ['blur', 'change']
@@ -700,42 +729,8 @@ export default {
         if (!valid) {
           return
         } else {
-          findCompanyBasicByTaxId(this.form).then(res => {
-            if (res !== '' && res !== null && res.key !== null) {
-              this.$message({
-                message: '加载客商基本档案成功',
-                type: 'success'
-              })
-              this.resetFormAdd()
-              this.formAdd = {
-                taxId: res.taxId,
-                belongArea: res.belongArea != null ? res.belongArea + '' : '',
-                companyShortName: res.companyShortName != null ? res.companyShortName + '' : '',
-                parentCompanyId: res.headOfficeCode,
-                companyProp: '',
-                customerProp: '',
-                customerType: '',
-                companyName: res.companyName != null ? res.companyName + '' : '',
-                contactAddress: '',
-                economicType: '',
-                foreignName: '',
-                legalbody: '',
-                postalCode: '',
-                registerfund: '',
-                remark: '',
-                trade: ''
-              }
-            } else {
-              this.$message({
-                message: '无该客商基本档案',
-                type: 'warning'
-              })
-            }
-            const value1 = this.form.belongCompany + ''
-            const value2 = this.form.taxId + ''
-            this.formAdd.belongCompany = value1
-            this.formAdd.taxId = value2
-          })
+           
+          this.formAdd.taxId = this.form.taxId
           this.title = '新增客商'
           this.showBadge = false
           this.dialogAdd = true
@@ -776,7 +771,7 @@ export default {
           })
           this.loading = false
           this.$parent.init()
-        })
+        })  
         .catch(err => {
           this.loading = false
           console.log(err.response.data.message)
@@ -816,11 +811,13 @@ export default {
     },
     // 客商新增界面 保存并提交审批
     doAddApprove() {
+     
       this.$refs.formAdd.validate(valid => {
         if (!valid) {
           return valid
         }
       })
+     
       const user = this.$store.state.user.dingUser
       const params = this.formAdd
       params.name = user.name
@@ -828,6 +825,7 @@ export default {
       params.createTime = null
       params.userid = user.userid
       params.depteId = user.department[0]
+     
       companyApprove(params).then(res => {
         this.$notify({
           title: '提交成功',
