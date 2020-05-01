@@ -17,7 +17,7 @@ export default {
         corpId: Config.corpId, // 企业id
         onSuccess: info => {
           getUserInfo({ requestAuthCode: info.code }).then(res => { // 通过该免登授权码可以获取用户身份
-            this.$store.dispatch('setDingUser', res.data) // 调用store中的set方法把钉钉用户信息保存到vuex中
+            this.$store.dispatch('setDingUser', res.data) //    调用store中的set方法把钉钉用户信息保存到vuex中
           })
         },
         onFail: err => {
